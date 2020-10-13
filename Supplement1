@@ -1,0 +1,124 @@
+import java.util.Scanner;
+import java.util.ArrayList;
+class Variables
+{
+	int month=0;
+	boolean beach=false;
+	double hours=0;
+	boolean competition=false;
+	int numComp=0;
+	boolean weather=false;
+	double pmonth=0;
+	double phour=0;
+	double pcomp=0;
+	double pweather=0;
+	double probability=0;
+	Variables (int m, boolean b, double h, boolean c, int nc, boolean w)
+	{
+		month=m;
+		beach=b;
+		hours=h;
+		competition=c;
+		numComp=nc;
+		weather=w;
+		prob_month();	
+		prob_hours();
+		prob_comp();
+		prob_weather();
+		finalprob();
+	}
+	void prob_month()
+	{
+		if (beach)
+			pmonth=1;
+		else
+		{
+			if (month>=5&&month<=7)
+				pmonth=1;
+			else if (month==3||month==4||month==8||month==9)
+				pmonth=0.75;
+			else if (month==2||month==10)
+				pmonth=0.25;
+			else
+				pmonth=0;
+		}
+	}
+	void prob_hours()
+	{
+		phour=((pmonth*(hours/10.0))/2)+((pweather*(hours/10.0))/2);
+	}
+	void prob_comp()
+	{
+		if (!competition)
+			pcomp=1;
+		else
+		{
+			pcomp= ((pmonth*(1/(numComp+1))/2))+((pweather*(1/(numComp+1))/2));
+		}
+	}
+	void prob_weather()
+	{
+		if (weather)
+			pweather=1;
+		else
+			pweather=0.3;
+	}
+	void finalprob()
+	{
+		probability= (pmonth*0.3)+(pweather*0.3)+(pcomp*0.2)+(phour*0.2);
+	}
+}
+public class Supplement1 
+{
+	public static void main(String[] args)
+	{
+		Scanner input=new Scanner(System.in);
+		ArrayList <Variables> myList=new ArrayList<>();
+		for (int a=0;a>-1;a++)
+		{
+			System.out.println("What month is it?");
+			System.out.println("Enter 0 for January");
+			System.out.println("Enter 1 for February");
+			System.out.println("Enter 2 for March");
+			System.out.println("Enter 3 for April");
+			System.out.println("Enter 4 for May");
+			System.out.println("Enter 5 for June");
+			System.out.println("Enter 6 for July");
+			System.out.println("Enter 7 for August");
+			System.out.println("Enter 8 for September");
+			System.out.println("Enter 9 for October");
+			System.out.println("Enter 10 for November");
+			System.out.println("Enter 11 for December");
+			int m=input.nextInt();
+			System.out.println("Is it beach weather year round where Sally is selling seashells? Enter 0 for no, Enter 1 for yes");
+			int x=input.nextInt();
+			boolean b=false;
+			if (x==1)
+				b=true;
+			System.out.println("Assuming the beach is open from 9am - 7pm, how many hours in a day is Sally selling sea shells for?");
+			double h=input.nextDouble();
+			System.out.println("Is there someone else selling sea shells apart from Sally? Enter 0 for no, Enter 1 for yes");
+			int nc=input.nextInt();
+			boolean c=false;
+			if (nc==1)
+			{
+				c=true;
+				System.out.println("How many other people are selling sea shells other than Sally?");
+				nc=input.nextInt();
+			}
+			System.out.println("What is the weather the day Sally is trying to sell her sea shells? Enter 0 for sunny, Enter 1 for rainy");
+			int wnum=input.nextInt();
+			boolean w=true;
+			if (wnum==1)
+				w=false;
+			myList.add(new Variables(m, b, h, c, nc, w));
+			String y=""+myList.get(a).probability;
+			System.out.println("The probability of Sally selling all her seashells is "+y.substring(2,4)+"%");
+			System.out.println("Would you like to determine the probability for another day with different conditions? Enter 0 for no, Enter 1 for yes");
+			int again=input.nextInt();
+			if (again==0)
+				break;
+		}
+	}
+
+}
