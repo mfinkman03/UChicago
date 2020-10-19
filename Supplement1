@@ -22,9 +22,9 @@ class Variables
 		numComp=nc;
 		weather=w;
 		prob_month();	
+		prob_weather();
 		prob_hours();
 		prob_comp();
-		prob_weather();
 		finalprob();
 	}
 	void prob_month()
@@ -50,7 +50,7 @@ class Variables
 	void prob_comp()
 	{
 		if (!competition)
-			pcomp=1;
+			pcomp=((pmonth/2)+(pweather/2));
 		else
 		{
 			pcomp= ((pmonth*(1/(numComp+1))/2))+((pweather*(1/(numComp+1))/2));
