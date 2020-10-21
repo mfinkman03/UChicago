@@ -6,14 +6,14 @@ class Variables
 	boolean beach=false;
 	double hours=0;
 	boolean competition=false;
-	int numComp=0;
+	double numComp=0;
 	boolean weather=false;
 	double pmonth=0;
 	double phour=0;
 	double pcomp=0;
 	double pweather=0;
 	double probability=0;
-	Variables (int m, boolean b, double h, boolean c, int nc, boolean w)
+	Variables (int m, boolean b, double h, boolean c, double nc, boolean w)
 	{
 		month=m;
 		beach=b;
@@ -45,7 +45,7 @@ class Variables
 	}
 	void prob_hours()
 	{
-		phour=((pmonth*(hours/10.0))/2)+((pweather*(hours/10.0))/2);
+		phour=(((pmonth*(hours/10.0)))/2)+(((pweather*(hours/10.0)))/2);
 	}
 	void prob_comp()
 	{
@@ -53,7 +53,7 @@ class Variables
 			pcomp=((pmonth/2)+(pweather/2));
 		else
 		{
-			pcomp= ((pmonth*(1/(numComp+1))/2))+((pweather*(1/(numComp+1))/2));
+			pcomp= (((pmonth*(1/(numComp+1)))/2))+(((pweather*(1/(numComp+1)))/2));
 		}
 	}
 	void prob_weather()
@@ -98,13 +98,13 @@ public class Supplement1
 			System.out.println("Assuming the beach is open from 9am - 7pm, how many hours in a day is Sally selling sea shells for?");
 			double h=input.nextDouble();
 			System.out.println("Is there someone else selling sea shells apart from Sally? Enter 0 for no, Enter 1 for yes");
-			int nc=input.nextInt();
+			double nc=input.nextInt();
 			boolean c=false;
 			if (nc==1)
 			{
 				c=true;
 				System.out.println("How many other people are selling sea shells other than Sally?");
-				nc=input.nextInt();
+				nc=input.nextDouble();
 			}
 			System.out.println("What is the weather the day Sally is trying to sell her sea shells? Enter 0 for sunny, Enter 1 for rainy");
 			int wnum=input.nextInt();
@@ -114,6 +114,10 @@ public class Supplement1
 			myList.add(new Variables(m, b, h, c, nc, w));
 			String y=""+myList.get(a).probability;
 			System.out.println("The probability of Sally selling all her seashells is "+y.substring(2,4)+"%");
+			System.out.println("weather - "+myList.get(a).pweather);
+			System.out.println("time of year - "+myList.get(a).pmonth);
+			System.out.println("comp - "+myList.get(a).pcomp);
+			System.out.println("hours - "+myList.get(a).phour);
 			System.out.println("Would you like to determine the probability for another day with different conditions? Enter 0 for no, Enter 1 for yes");
 			int again=input.nextInt();
 			if (again==0)
